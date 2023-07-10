@@ -51,38 +51,43 @@ function cloneRepo () {
     popd
 }
 
-function processLib () {
+function buildFramework() {
     local lib=$1
+    local destination=$2
 
     pushd SalesforceMobileSDK-iOS
-    header "Building iOS archive for $lib"
+    header "Building $destination archive for $lib"
     xcodebuild archive \
         -workspace SalesforceMobileSDK.xcworkspace \
         -scheme $lib \
-        -destination "generic/platform=iOS" \
+        -destination "generic/platform=$destination" \
         -archivePath ../archives/$lib-iOS \
         SKIP_INSTALL=NO \
         BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+    popd
+}
 
-    header "Building iOS simulator archive for $lib"
-    xcodebuild archive \
-        -workspace SalesforceMobileSDK.xcworkspace \
-        -scheme $lib \
-        -destination "generic/platform=iOS Simulator" \
-        -archivePath ../archives/$lib-Sim \
-        SKIP_INSTALL=NO \
-        BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+function processLib () {
+    local lib=$1
 
+    buildFramework $lib "iOS"
+    buildFramework $lib "iOS Simulator"
+    
     header "Building xcframework for $lib"
+    pushd SalesforceMobileSDK-iOS
     xcodebuild -create-xcframework \
         -framework ../archives/$lib-iOS.xcarchive/Products/Library/Frameworks/$lib.framework \
         -framework ../archives/$lib-Sim.xcarchive/Products/Library/Frameworks/$lib.framework \
         -output ../archives/$lib.xcframework
     popd
 
-    header "Zipping xcframework for $lib"
     pushd archives
+    header "Zipping xcframework for $lib"
     zip $lib.xcframework.zip $lib.xcframework -r
+
+    header "Updating checksum for $lib"
+    local checksum=`swift package compute-checksum $lib.xcframework.zip`
+    gsed -i "s/checksum: \"[^\"]*\" \/\/ ${lib}/checksum: \"${checksum}\" \/\/ ${lib}/g" ../Package.swift
     popd
 }
 
@@ -102,6 +107,6 @@ function generateXcFrameworks() {
 
 parse_opts "$@"
 
-cloneRepo $OPT_REPO $OPT_BRANCH
+# cloneRepo $OPT_REPO $OPT_BRANCH
 generateXcFrameworks
 cleanup

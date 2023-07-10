@@ -34,24 +34,29 @@ let package = Package(
     ],
     targets: [
         .binaryTarget(
-             name: "SalesforceAnalytics",
-             path:"archives/SalesforceAnalytics.xcframework.zip"
+            name: "SalesforceAnalytics",
+            url: "https://github.com/wmathurin/SalesforceMobileSDK-iOS-SPM/raw/main/archives/SalesforceAnalytics.xcframework.zip",
+            checksum: "57032573bf78e6dd04d3087cce04e571933d7ff6df4f0c33f9b3742658305526" // SalesforceAnalytics
          ),
         .binaryTarget(
             name: "SalesforceSDKCommon",
-            path:"archives/SalesforceSDKCommon.xcframework.zip"
+            url: "https://github.com/wmathurin/SalesforceMobileSDK-iOS-SPM/raw/main/archives/SalesforceSDKCommon.xcframework.zip",
+            checksum: "f41efb8aa09f7647a147182f4b4bf2f7223b90cae9abf027b17f4ff3c23670f2" // SalesforceSDKCommon
         ),
         .binaryTarget(
             name: "SalesforceSDKCore",
-            path:"archives/SalesforceSDKCore.xcframework.zip"
+            url: "https://github.com/wmathurin/SalesforceMobileSDK-iOS-SPM/raw/main/archives/SalesforceSDKCore.xcframework.zip",
+            checksum: "742d62a10197326d1f45eedc4eb99af339fa09a05546fbbd55ebc076d014eb00" // SalesforceSDKCore
         ),
         .binaryTarget(
             name: "SmartStore",
-            path:"archives/SmartStore.xcframework.zip"
+            url: "https://github.com/wmathurin/SalesforceMobileSDK-iOS-SPM/raw/main/archives/SmartStore.xcframework.zip",
+            checksum: "8e749b90d066ea31eadbeeb811d0c062d52f312a984dde31c1207e09b07da8c5" // SmartStore
         ),
         .binaryTarget(
             name: "MobileSync",
-            path:"archives/MobileSync.xcframework.zip"
+            url: "https://github.com/wmathurin/SalesforceMobileSDK-iOS-SPM/raw/main/archives/MobileSync.xcframework.zip",
+            checksum: "dfc1bb3fb5c1d2a268c938abc905fc83ad9254b5da893b084cced1e08c7365d4" // MobileSync
         )
     ],
     swiftLanguageVersions: [.v5]
