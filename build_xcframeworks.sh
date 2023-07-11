@@ -4,7 +4,6 @@
 
 OPT_REPO="forcedotcom"
 OPT_BRANCH="dev"
-RED='\033[0;31m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
@@ -27,12 +26,6 @@ parse_opts ()
             b)  OPT_BRANCH=${OPTARG} ;;
         esac
     done
-
-    if [ "${OPT_REPO}" == "" ] || [ "${OPT_BRANCH}" == "" ]
-    then
-        echo -e "${RED}You must specify a value for the org and branch.${NC}"
-        usage
-    fi
 }
 
 function header () {
@@ -44,8 +37,10 @@ function cloneRepo () {
     local repoOrg=$1
     local branch=$2
     local repo="git@github.com:${repoOrg}/SalesforceMobileSDK-iOS"
+    
     header "Cloning ${repo}#${branch}"
     git clone --branch $branch --single-branch --depth 1 $repo
+
     pushd SalesforceMobileSDK-iOS
     ./install.sh
     popd
@@ -54,6 +49,7 @@ function cloneRepo () {
 function buildFramework() {
     local lib=$1
     local destination=$2
+    local suffix=$3
 
     pushd SalesforceMobileSDK-iOS
     header "Building $destination archive for $lib"
@@ -61,52 +57,68 @@ function buildFramework() {
         -workspace SalesforceMobileSDK.xcworkspace \
         -scheme $lib \
         -destination "generic/platform=$destination" \
-        -archivePath ../archives/$lib-iOS \
+        -archivePath ../archives/$lib-$suffix \
         SKIP_INSTALL=NO \
         BUILD_LIBRARY_FOR_DISTRIBUTION=YES
     popd
+
+    if [ $lib == "SmartStore" ]
+    then
+        header "Fix swiftinterface for $lib $destination"
+        find archives/$lib-$suffix.xcarchive -name "*.swiftinterface" -exec gsed -i "s/${lib}\.//g" {} \;
+    fi
 }
 
-function processLib () {
+function buildXCFramework () {
     local lib=$1
 
-    buildFramework $lib "iOS"
-    buildFramework $lib "iOS Simulator"
-    
-    header "Building xcframework for $lib"
     pushd SalesforceMobileSDK-iOS
+    header "Building xcframework for $lib"
     xcodebuild -create-xcframework \
         -framework ../archives/$lib-iOS.xcarchive/Products/Library/Frameworks/$lib.framework \
         -framework ../archives/$lib-Sim.xcarchive/Products/Library/Frameworks/$lib.framework \
         -output ../archives/$lib.xcframework
     popd
+}    
+
+function zipXCFramework () {
+    local lib=$1
 
     pushd archives
     header "Zipping xcframework for $lib"
     zip $lib.xcframework.zip $lib.xcframework -r
-
-    header "Updating checksum for $lib"
-    local checksum=`swift package compute-checksum $lib.xcframework.zip`
-    gsed -i "s/checksum: \"[^\"]*\" \/\/ ${lib}/checksum: \"${checksum}\" \/\/ ${lib}/g" ../Package.swift
     popd
 }
 
+function updateChecksum () {
+    local lib=$1
+    local checksum=`swift package compute-checksum archives/$lib.xcframework.zip`
+
+    header "Updating checksum for $lib"
+    gsed -i "s/checksum: \"[^\"]*\" \/\/ ${lib}/checksum: \"${checksum}\" \/\/ ${lib}/g" Package.swift
+}
+
+function processLib () {
+    local lib=$1
+
+    buildFramework $lib "iOS" "iOS"
+    buildFramework $lib "iOS Simulator" "Sim"
+    buildXCFramework $lib
+    zipXCFramework $lib
+    # Using path instead of url / checksum in Package.swift - so checksum calculation is not needed
+    # updateChecksum $lib
+}
+
 function cleanup () {
-    rm -rf archives/*-iOS.xcarchive
-    rm -rf archives/*-Sim.xcarchive
+    rm -rf archives/*.xcarchive
     rm -rf archives/*.xcframework
     rm -rf SalesforceMobileSDK-iOS
 }    
 
-function generateXcFrameworks() {
-    for lib in 'SalesforceSDKCommon' 'SalesforceAnalytics' 'SalesforceSDKCore' 'SmartStore' 'MobileSync'
-    do
-	processLib $lib
-    done
-}
-
 parse_opts "$@"
-
-# cloneRepo $OPT_REPO $OPT_BRANCH
-generateXcFrameworks
+#cloneRepo $OPT_REPO $OPT_BRANCH
+#for lib in 'SalesforceSDKCommon' 'SalesforceAnalytics' 'SalesforceSDKCore' 'SmartStore' 'MobileSync'
+#do
+#    processLib $lib
+#done
 cleanup
