@@ -18,7 +18,7 @@ usage ()
 
 parse_opts ()
 {
-    while getopts :hr:b command_line_opt
+    while getopts :hr:b: command_line_opt
     do
         case ${command_line_opt} in
 	    h)  usage ;;
@@ -116,9 +116,9 @@ function cleanup () {
 }    
 
 parse_opts "$@"
-#cloneRepo $OPT_REPO $OPT_BRANCH
-#for lib in 'SalesforceSDKCommon' 'SalesforceAnalytics' 'SalesforceSDKCore' 'SmartStore' 'MobileSync'
-#do
-#    processLib $lib
-#done
+cloneRepo $OPT_REPO $OPT_BRANCH
+for lib in 'SalesforceSDKCommon' 'SalesforceAnalytics' 'SalesforceSDKCore' 'SmartStore' 'MobileSync'
+do
+    processLib $lib
+done
 cleanup
