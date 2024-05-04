@@ -1,11 +1,11 @@
-// swift-tools-version: 5.5
+// swift-tools-version: 5.7
 import PackageDescription
 
 let package = Package(
     name: "SalesforceMobileSDK",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v15),
+        .iOS(.v16),
         .watchOS(.v8)
     ],
     products: [
