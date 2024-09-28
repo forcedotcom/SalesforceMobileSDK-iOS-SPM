@@ -77,9 +77,11 @@ function buildXCFramework () {
     xcodebuild -create-xcframework \
         -framework ../archives/$lib-iOS.xcarchive/Products/Library/Frameworks/$lib.framework \
         -framework ../archives/$lib-Sim.xcarchive/Products/Library/Frameworks/$lib.framework \
+        -framework ../archives/$lib-visionOS.xcarchive/Products/Library/Frameworks/$lib.framework \
+        -framework ../archives/$lib-visionOS-Sim.xcarchive/Products/Library/Frameworks/$lib.framework \
         -output ../archives/$lib.xcframework
     popd
-}    
+}
 
 function zipXCFramework () {
     local lib=$1
@@ -103,6 +105,8 @@ function processLib () {
 
     buildFramework $lib "iOS" "iOS"
     buildFramework $lib "iOS Simulator" "Sim"
+    buildFramework $lib "visionOS" "visionOS"
+    buildFramework $lib "visionOS Simulator" "visionOS-Sim"
     buildXCFramework $lib
     zipXCFramework $lib
     # Using path instead of url / checksum in Package.swift - so checksum calculation is not needed
