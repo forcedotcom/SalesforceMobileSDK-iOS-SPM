@@ -5,7 +5,7 @@ let package = Package(
     name: "SalesforceMobileSDK",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v16),
+        .iOS(.v17),
         .watchOS(.v8),
         .visionOS(.v2)
     ],
