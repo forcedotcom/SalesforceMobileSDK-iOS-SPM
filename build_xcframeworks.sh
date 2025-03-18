@@ -88,7 +88,10 @@ function zipXCFramework () {
 
     pushd archives
     header "Zipping xcframework for $lib"
-    zip $lib.xcframework.zip $lib.xcframework -r
+    if ! zip $lib.xcframework.zip $lib.xcframework -r; then
+        echo "Error: $lib.xcframework not found or zip failed."
+        exit 1
+    fi
     popd
 }
 
