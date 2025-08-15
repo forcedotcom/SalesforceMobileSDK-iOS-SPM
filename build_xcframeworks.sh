@@ -98,7 +98,7 @@ function buildSQLCipher() {
         --enable-static \
         --disable-shared \
         CPPFLAGS="-DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2 -DSQLCIPHER_CRYPTO_CC" \
-        CFLAGS="-arch $arch -isysroot \$(xcrun --sdk $sdk --show-sdk-path) -m${sdk/simulator/}-version-min=$min_version -fembed-bitcode"
+        CFLAGS="-arch $arch -isysroot $(xcrun --sdk $sdk --show-sdk-path) -m${sdk/simulator/}-version-min=$min_version -fembed-bitcode"
     
     make sqlite3.c
     
@@ -106,7 +106,7 @@ function buildSQLCipher() {
     mkdir -p ../sqlcipher-libs/$suffix
     xcrun clang -c sqlite3.c -o ../sqlcipher-libs/$suffix/sqlite3.o \
         -arch $arch \
-        -isysroot \$(xcrun --sdk $sdk --show-sdk-path) \
+        -isysroot $(xcrun --sdk $sdk --show-sdk-path) \
         -m${sdk/simulator/}-version-min=$min_version \
         -DSQLITE_HAS_CODEC \
         -DSQLITE_TEMP_STORE=2 \
