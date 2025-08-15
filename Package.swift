@@ -24,7 +24,7 @@ let package = Package(
         ),
         .library(
             name: "SmartStore",
-            targets: ["SmartStore"]
+            targets: ["SmartStore", "SQLCipher", "FMDB"]
         ),
         .library(
             name: "MobileSync",
@@ -32,6 +32,8 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", exact: "4.10.0"),
+        .package(url: "https://github.com/ccgus/fmdb.git", exact: "2.7.12")
     ],
     targets: [
         .binaryTarget(
