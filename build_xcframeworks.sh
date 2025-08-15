@@ -53,7 +53,6 @@ function buildFramework() {
 
     pushd SalesforceMobileSDK-iOS
     header "Building $destination archive for $lib"
-    
     xcodebuild archive \
         -workspace SalesforceMobileSDK.xcworkspace \
         -scheme $lib \
@@ -106,8 +105,6 @@ function updateChecksum () {
 
 function processLib () {
     local lib=$1
-
-
 
     buildFramework $lib "iOS" "iOS"
     buildFramework $lib "iOS Simulator" "Sim"
