@@ -24,7 +24,7 @@ let package = Package(
         ),
         .library(
             name: "SmartStore",
-            targets: ["SmartStore", "SQLCipher", "FMDB"]
+            targets: ["SmartStoreWrapper"]
         ),
         .library(
             name: "MobileSync",
@@ -55,6 +55,14 @@ let package = Package(
         .binaryTarget(
             name: "MobileSync",
             path:"archives/MobileSync.xcframework.zip"
+        ),
+        .target(
+            name: "SmartStoreWrapper",
+            dependencies: [
+                "SmartStore",
+                .product(name: "SQLCipher", package: "SQLCipher.swift"),
+                .product(name: "FMDB", package: "fmdb")
+            ]
         )
     ],
     swiftLanguageVersions: [.v5]
