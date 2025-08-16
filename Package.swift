@@ -33,7 +33,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", exact: "4.10.0"),
-        .package(url: "https://github.com/ccgus/fmdb.git", exact: "2.7.12")
+        .package(url: "https://github.com/wmathurin/fmdb.git", branch: "spm_with_sqlcipher")
     ],
     targets: [
         .binaryTarget(
