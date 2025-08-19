@@ -7,7 +7,8 @@ let package = Package(
     platforms: [
         .iOS(.v17),
         .watchOS(.v8),
-        .visionOS(.v2)
+        .visionOS(.v2),
+        .macCatalyst(.v13)
     ],
     products: [
         .library(
@@ -24,7 +25,7 @@ let package = Package(
         ),
         .library(
             name: "SmartStore",
-            targets: ["SmartStore"]
+            targets: ["SmartStoreWrapper"]
         ),
         .library(
             name: "MobileSync",
@@ -32,6 +33,8 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", exact: "4.10.0"),
+        .package(url: "https://github.com/forcedotcom/fmdb.git", branch: "spm")
     ],
     targets: [
         .binaryTarget(
@@ -53,6 +56,14 @@ let package = Package(
         .binaryTarget(
             name: "MobileSync",
             path:"archives/MobileSync.xcframework.zip"
+        ),
+        .target(
+            name: "SmartStoreWrapper",
+            dependencies: [
+                "SmartStore",
+                .product(name: "SQLCipher", package: "SQLCipher.swift"),
+                .product(name: "FMDB", package: "fmdb")
+            ]
         )
     ],
     swiftLanguageVersions: [.v5]
