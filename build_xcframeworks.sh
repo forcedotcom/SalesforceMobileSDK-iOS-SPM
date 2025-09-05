@@ -36,7 +36,7 @@ function header () {
 function cloneRepo () {
     local repoOrg=$1
     local branch=$2
-    local repo="git@github.com:${repoOrg}/SalesforceMobileSDK-iOS"
+    local repo="https://github.com/${repoOrg}/SalesforceMobileSDK-iOS"
     
     header "Cloning ${repo}#${branch}"
     git clone --branch $branch --single-branch --depth 1 $repo
