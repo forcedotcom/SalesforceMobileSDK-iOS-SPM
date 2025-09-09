@@ -50,7 +50,7 @@ let package = Package(
             path:"archives/SalesforceSDKCore.xcframework.zip"
         ),
         .binaryTarget(
-            name: "SmartStore",
+            name: "SmartStoreBinary",
             path:"archives/SmartStore.xcframework.zip"
         ),
         .binaryTarget(
@@ -60,7 +60,7 @@ let package = Package(
         .target(
             name: "SmartStoreWrapper",
             dependencies: [
-                "SmartStore",
+                "SmartStoreBinary",
                 .product(name: "SQLCipher", package: "SQLCipher.swift"),
                 .product(name: "FMDB", package: "fmdb")
             ]
