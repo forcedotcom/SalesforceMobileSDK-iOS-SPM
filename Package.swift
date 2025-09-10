@@ -33,8 +33,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", exact: "4.10.0"),
-        .package(url: "https://github.com/forcedotcom/fmdb.git", branch: "spm")
+        .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", exact: "4.10.0")
     ],
     targets: [
         .binaryTarget(
@@ -61,8 +60,7 @@ let package = Package(
             name: "SmartStoreWrapper",
             dependencies: [
                 "SmartStoreBinary",
-                .product(name: "SQLCipher", package: "SQLCipher.swift"),
-                .product(name: "FMDB", package: "fmdb")
+                .product(name: "SQLCipher", package: "SQLCipher.swift")
             ]
         )
     ],

@@ -7,5 +7,4 @@
 // Re-export SQLCipher for encryption capabilities
 @_exported import SQLCipher
 
-// Re-export FMDB for SQLite wrapper functionality  
-@_exported import FMDB
+// Note: FMDB functionality is included within the SmartStore framework
