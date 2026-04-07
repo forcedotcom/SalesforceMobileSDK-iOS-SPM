@@ -67,7 +67,7 @@ This package supports:
 
 | Platform | Minimum Version |
 |----------|----------------|
-| **iOS** | 17.0 |
+| **iOS** | 18.0 |
 | **watchOS** | 8.0 |
 | **visionOS** | 2.0 |
 | **macCatalyst** | 13.0 |
@@ -141,9 +141,10 @@ If you prefer CocoaPods over Swift Package Manager, see:
 
 | SPM Package | iOS SDK | Swift | Xcode | iOS Min |
 |------------|---------|-------|-------|---------|
-| 13.2.0     | 13.2.0  | 5.0+  | 15+   | 17.0    |
-| 13.1.0     | 13.1.0  | 5.0+  | 15+   | 16.0    |
-| 13.0.0     | 13.0.0  | 5.0+  | 15+   | 16.0    |
+| 14.0.0     | 14.0.0  | 5.0+  | 16+   | 18.0    |
+| 13.2.0     | 13.2.0  | 5.0+  | 16+   | 17.0    |
+| 13.1.0     | 13.1.0  | 5.0+  | 16+   | 17.0    |
+| 13.0.0     | 13.0.0  | 5.0+  | 16+   | 17.0    |
 
 See [release notes](https://github.com/forcedotcom/SalesforceMobileSDK-iOS/releases) for detailed version history.
 

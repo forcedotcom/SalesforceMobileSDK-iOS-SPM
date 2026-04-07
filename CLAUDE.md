@@ -309,7 +309,7 @@ Since this is primarily a binary distribution repo:
 
 ### Package.swift Quality
 - **Valid Swift**: Ensure proper Swift syntax
-- **Correct Platforms**: iOS 17.0+, watchOS 8+, visionOS 2+, macCatalyst 13+
+- **Correct Platforms**: iOS 18.0+, watchOS 8+, visionOS 2+, macCatalyst 13+
 - **Dependency Versions**: Pin exact versions for stability (SQLCipher, FMDB)
 - **Binary Paths**: Verify all paths to archives/ are correct
 - **Product Names**: Match iOS repo library names
