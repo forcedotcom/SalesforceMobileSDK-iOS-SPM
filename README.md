@@ -68,7 +68,6 @@ This package supports:
 | Platform | Minimum Version |
 |----------|----------------|
 | **iOS** | 18.0 |
-| **watchOS** | 8.0 |
 | **visionOS** | 2.0 |
 | **macCatalyst** | 13.0 |
 
@@ -118,6 +117,9 @@ This repository contains:
 Each XCFramework includes slices for:
 - **iOS Devices**: arm64 (iPhone, iPad)
 - **iOS Simulator**: arm64 (Apple Silicon Macs) + x86_64 (Intel Macs)
+- **Mac Catalyst**: arm64 + x86_64 (native Mac apps)
+- **visionOS Device**: arm64 (Apple Vision Pro)
+- **visionOS Simulator**: arm64 (Apple Silicon Macs only)
 
 ## Binary vs Source Distribution
 
