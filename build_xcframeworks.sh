@@ -50,29 +50,16 @@ function buildFramework() {
     local lib=$1
     local destination=$2
     local suffix=$3
-    local archs="${4:-}"
 
     pushd SalesforceMobileSDK-iOS
     header "Building $destination archive for $lib"
-
-    if [ -n "$archs" ]; then
-        xcodebuild archive \
-            -workspace SalesforceMobileSDK.xcworkspace \
-            -scheme $lib \
-            -destination "generic/platform=$destination" \
-            -archivePath ../archives/$lib-$suffix \
-            SKIP_INSTALL=NO \
-            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
-            ARCHS="$archs"
-    else
-        xcodebuild archive \
-            -workspace SalesforceMobileSDK.xcworkspace \
-            -scheme $lib \
-            -destination "generic/platform=$destination" \
-            -archivePath ../archives/$lib-$suffix \
-            SKIP_INSTALL=NO \
-            BUILD_LIBRARY_FOR_DISTRIBUTION=YES
-    fi
+    xcodebuild archive \
+        -workspace SalesforceMobileSDK.xcworkspace \
+        -scheme $lib \
+        -destination "generic/platform=$destination" \
+        -archivePath ../archives/$lib-$suffix \
+        SKIP_INSTALL=NO \
+        BUILD_LIBRARY_FOR_DISTRIBUTION=YES
     popd
 
     if [ $lib == "SmartStore" ]
@@ -124,7 +111,7 @@ function processLib () {
     buildFramework $lib "iOS Simulator" "Sim"
     buildFramework $lib "macOS,variant=Mac Catalyst" "Catalyst"
     buildFramework $lib "visionOS" "visionOS"
-    buildFramework $lib "visionOS Simulator" "visionOS-Sim" "arm64"
+    buildFramework $lib "visionOS Simulator" "visionOS-Sim"
     buildXCFramework $lib
     zipXCFramework $lib
     # Using path instead of url / checksum in Package.swift - so checksum calculation is not needed
