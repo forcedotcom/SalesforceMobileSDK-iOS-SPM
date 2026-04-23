@@ -77,6 +77,7 @@ function buildXCFramework () {
     xcodebuild -create-xcframework \
         -framework ../archives/$lib-iOS.xcarchive/Products/Library/Frameworks/$lib.framework \
         -framework ../archives/$lib-Sim.xcarchive/Products/Library/Frameworks/$lib.framework \
+        -framework ../archives/$lib-Catalyst.xcarchive/Products/Library/Frameworks/$lib.framework \
         -framework ../archives/$lib-visionOS.xcarchive/Products/Library/Frameworks/$lib.framework \
         -framework ../archives/$lib-visionOS-Sim.xcarchive/Products/Library/Frameworks/$lib.framework \
         -output ../archives/$lib.xcframework
@@ -108,6 +109,7 @@ function processLib () {
 
     buildFramework $lib "iOS" "iOS"
     buildFramework $lib "iOS Simulator" "Sim"
+    buildFramework $lib "macOS,variant=Mac Catalyst" "Catalyst"
     buildFramework $lib "visionOS" "visionOS"
     buildFramework $lib "visionOS Simulator" "visionOS-Sim"
     buildXCFramework $lib
