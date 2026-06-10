@@ -15,7 +15,7 @@ This repository provides **pre-built binary frameworks** (XCFrameworks) for the 
    ```
    https://github.com/forcedotcom/SalesforceMobileSDK-iOS-SPM.git
    ```
-3. Select version or branch (e.g., `13.2.0` or `master`)
+3. Select version or branch (e.g., `13.2.1` or `master`)
 4. Choose which libraries to add to your target:
    - **SalesforceAnalytics** - Telemetry and analytics
    - **SalesforceSDKCommon** - Shared utilities
@@ -67,7 +67,8 @@ This package supports:
 
 | Platform | Minimum Version |
 |----------|----------------|
-| **iOS** | 18.0 |
+| **iOS** | 17.0 |
+| **watchOS** | 8.0 |
 | **visionOS** | 2.0 |
 | **macCatalyst** | 13.0 |
 
@@ -153,7 +154,7 @@ See [release notes](https://github.com/forcedotcom/SalesforceMobileSDK-iOS/relea
 ## Dependencies
 
 This package automatically includes:
-- **SQLCipher**: 4.10.0 - SQLite encryption (for SmartStore)
+- **SQLCipher**: 4.10.0 (13.x) / 4.16.0 (14.x) - SQLite encryption (for SmartStore)
 - **FMDB**: 2.7.12-sqlcipher - Objective-C SQLite wrapper
 
 These are managed automatically by Swift Package Manager.
@@ -177,27 +178,32 @@ These are managed automatically by Swift Package Manager.
 
 ## For SDK Maintainers
 
+### Branch Model
+
+This repo follows the same two-branch workflow as all other Mobile SDK repos:
+
+- **`master`** — stable, tagged release snapshots only
+- **`dev`** — active development for the next release
+
+At release time, `release.js` in the Package repo merges `dev → master`, builds xcframeworks, commits, tags, then merges `master → dev`. For patch releases, changes are cherry-picked directly to master (no dev merge).
+
 ### Building XCFrameworks
 
-If you're a maintainer publishing a new release:
+XCFramework builds are automated by `release.js`. To build manually:
 
 ```bash
-# Clone this repository
-git clone https://github.com/forcedotcom/SalesforceMobileSDK-iOS-SPM.git
-cd SalesforceMobileSDK-iOS-SPM
+# Build XCFrameworks from iOS SDK release tag
+./build_xcframeworks.sh -r forcedotcom -b master
 
-# Build XCFrameworks from iOS SDK release
-./build_xcframeworks.sh -r forcedotcom -b v13.2.0
-
-# Commit and tag
+# Commit and tag (release.js does this automatically)
 git add archives/ Package.swift
-git commit -m "Release v13.2.0"
-git tag 13.2.0  # Note: no 'v' prefix for SPM tags
+git commit -m "Mobile SDK 13.2.1"
+git tag 13.2.1  # Note: no 'v' prefix for SPM tags
 git push origin master
-git push origin 13.2.0
+git push origin 13.2.1
 ```
 
-**Important**: SPM tags should NOT have a 'v' prefix (e.g., use `13.2.0`, not `v13.2.0`).
+**Important**: SPM tags must NOT have a `v` prefix (e.g., use `13.2.1`, not `v13.2.1`).
 
 ## Related Repositories
 
