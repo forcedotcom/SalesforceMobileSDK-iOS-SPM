@@ -259,6 +259,21 @@ git push origin 13.2.0
 
 **Important**: SPM uses tags without 'v' prefix (e.g., `13.2.0`, not `v13.2.0`).
 
+## Branch Model
+
+This repo follows the same two-branch model as all other Mobile SDK repos:
+
+- **`master`** — stable, tagged release snapshots only. Never commit work-in-progress here.
+- **`dev`** — active development for the next release. All changes targeting the next major/minor version land here.
+
+At release time, `release.js` in the Package repo:
+1. Merges `dev → master`
+2. Runs `build_xcframeworks.sh` on merged master
+3. Commits, tags master (no `v` prefix), pushes
+4. Merges `master → dev` and pushes dev
+
+For patch releases, `dev → master` merge is skipped; changes are cherry-picked directly to master.
+
 ### 6. Verify Release
 - Check that tag is visible on GitHub
 - Test in a new Xcode project by adding package via URL
