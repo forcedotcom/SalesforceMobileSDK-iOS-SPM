@@ -15,7 +15,7 @@ This repository provides **pre-built binary frameworks** (XCFrameworks) for the 
    ```
    https://github.com/forcedotcom/SalesforceMobileSDK-iOS-SPM.git
    ```
-3. Select version or branch (e.g., `13.2.1` or `master`)
+3. Select version or branch (e.g., `14.0.0` or `dev`)
 4. Choose which libraries to add to your target:
    - **SalesforceAnalytics** - Telemetry and analytics
    - **SalesforceSDKCommon** - Shared utilities
@@ -67,10 +67,11 @@ This package supports:
 
 | Platform | Minimum Version |
 |----------|----------------|
-| **iOS** | 17.0 |
-| **watchOS** | 8.0 |
+| **iOS** | 18.0 |
 | **visionOS** | 2.0 |
 | **macCatalyst** | 13.0 |
+
+> **Note**: This is the `dev` branch, targeting the next release (14.0). For the current stable release see `master`.
 
 ## Usage Example
 
@@ -154,7 +155,7 @@ See [release notes](https://github.com/forcedotcom/SalesforceMobileSDK-iOS/relea
 ## Dependencies
 
 This package automatically includes:
-- **SQLCipher**: 4.10.0 (13.x) / 4.16.0 (14.x) - SQLite encryption (for SmartStore)
+- **SQLCipher**: 4.16.0 - SQLite encryption (for SmartStore)
 - **FMDB**: 2.7.12-sqlcipher - Objective-C SQLite wrapper
 
 These are managed automatically by Swift Package Manager.
@@ -183,7 +184,7 @@ These are managed automatically by Swift Package Manager.
 This repo follows the same two-branch workflow as all other Mobile SDK repos:
 
 - **`master`** — stable, tagged release snapshots only
-- **`dev`** — active development for the next release
+- **`dev`** — active development for the next release (this branch)
 
 At release time, `release.js` in the Package repo merges `dev → master`, builds xcframeworks, commits, tags, then merges `master → dev`. For patch releases, changes are cherry-picked directly to master (no dev merge).
 
@@ -192,18 +193,18 @@ At release time, `release.js` in the Package repo merges `dev → master`, build
 XCFramework builds are automated by `release.js`. To build manually:
 
 ```bash
-# Build XCFrameworks from iOS SDK release tag
+# Build XCFrameworks from the current branch
 ./build_xcframeworks.sh -r forcedotcom -b master
 
 # Commit and tag (release.js does this automatically)
 git add archives/ Package.swift
-git commit -m "Mobile SDK 13.2.1"
-git tag 13.2.1  # Note: no 'v' prefix for SPM tags
+git commit -m "Mobile SDK 14.0.0"
+git tag 14.0.0  # Note: no 'v' prefix for SPM tags
 git push origin master
-git push origin 13.2.1
+git push origin 14.0.0
 ```
 
-**Important**: SPM tags must NOT have a `v` prefix (e.g., use `13.2.1`, not `v13.2.1`).
+**Important**: SPM tags must NOT have a `v` prefix (e.g., use `14.0.0`, not `v14.0.0`).
 
 ## Related Repositories
 

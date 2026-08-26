@@ -1,0 +1,14 @@
+{
+  "docs": [
+    {
+      "doc": "README.md",
+      "scope": ".",
+      "description": "Swift Package Manager Distribution for Salesforce Mobile SDK for iOS"
+    },
+    {
+      "doc": "CLAUDE.md",
+      "scope": ".",
+      "description": "AI assistant instructions for the iOS SPM distribution repository"
+    }
+  ]
+}

@@ -5,8 +5,7 @@ let package = Package(
     name: "SalesforceMobileSDK",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v17),
-        .watchOS(.v8),
+        .iOS(.v18),
         .visionOS(.v2),
         .macCatalyst(.v13)
     ],
@@ -33,7 +32,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", exact: "4.10.0"),
+        .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", exact: "4.17.0"),
         .package(url: "https://github.com/forcedotcom/fmdb.git", exact: "2.7.12-sqlcipher")
     ],
     targets: [
@@ -66,5 +65,5 @@ let package = Package(
             ]
         )
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageModes: [.v5]
 )
